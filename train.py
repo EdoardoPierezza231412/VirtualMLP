@@ -7,6 +7,7 @@ from wandb.integration.sb3 import WandbCallback
 import wandb
 from ot2_env_wrapper import OT2Env  # Custom environment wrapper
 from clearml import Task  # Import ClearML's Task
+import typing_extensions
 
 # ClearML integration
 task = Task.init(
