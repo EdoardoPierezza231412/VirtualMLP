@@ -54,14 +54,6 @@ def main():
     # Create vectorized environment for SB3
     env = DummyVecEnv([make_env])
 
-    # Optional: Record training videos
-    env = VecVideoRecorder(
-        env,
-        f"videos/{run.id}",
-        record_video_trigger=lambda x: x % 2000 == 0,
-        video_length=200,
-    )
-
     # Initialize PPO model
     model = PPO(
         "MlpPolicy",
@@ -97,4 +89,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
