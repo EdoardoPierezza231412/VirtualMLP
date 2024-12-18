@@ -17,8 +17,8 @@ task = Task.init(
 task.set_base_docker('deanis/2023y2b-rl:latest')  # Set the Docker image
 task.execute_remotely(queue_name="default")       # Execute remotely in the ClearML queue
 
-# Set W&B API key dynamically
-os.environ['WANDB_API_KEY'] = os.getenv('4068421fea4a91b66b033f55a01001d7badb12a6')  # Replace with your W&B API key in the environment
+
+os.environ['WANDB_API_KEY'] = '4068421fea4a91b66b033f55a01001d7badb12a6'
 
 def main():
     # Argument parser for hyperparameters
