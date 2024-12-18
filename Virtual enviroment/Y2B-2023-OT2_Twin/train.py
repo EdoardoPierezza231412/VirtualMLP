@@ -54,6 +54,14 @@ def main():
     # Create vectorized environment for SB3
     env = DummyVecEnv([make_env])
 
+    # Optional: Record training videos
+    env = VecVideoRecorder(
+        env,
+        f"videos/{run.id}",
+        record_video_trigger=lambda x: x % 2000 == 0,
+        video_length=200,
+    )
+
     # Initialize PPO model
     model = PPO(
         "MlpPolicy",
@@ -66,26 +74,39 @@ def main():
         tensorboard_log=f"runs/{run.id}",  # Log TensorBoard metrics
     )
 
-    # Train the model
-    model.learn(
-        total_timesteps=args.total_timesteps,
-        callback=WandbCallback(
-            gradient_save_freq=100,               # Log gradients every 100 steps
-            model_save_path=f"models/{run.id}",  # Save models periodically
-            verbose=2,                           # Verbosity level for W&B
-        ),
-    )
+    # Train the model in chunks with periodic saving
+    total_training_steps = args.total_timesteps
+    save_frequency = 100000  # Define the frequency to save the model in timesteps
+
+    for i in range(total_training_steps // save_frequency):
+        print(f"Training chunk {i+1}, timesteps: {save_frequency}")
+        model.learn(
+            total_timesteps=save_frequency,
+            callback=WandbCallback(
+                gradient_save_freq=100,               # Log gradients every 100 steps
+                model_save_path=f"models/{run.id}",  # Save models periodically
+                verbose=2,                           # Verbosity level for W&B
+            ),
+            progress_bar=True,
+            reset_num_timesteps=False,  # Continue counting timesteps
+            tb_log_name=f"runs/{run.id}",
+        )
+        # Save the model after each chunk
+        model.save(f"models/{run.id}/{save_frequency * (i + 1)}")
+        print(f"Model saved at timesteps: {save_frequency * (i + 1)}")
+
     print("Training complete!")
 
     # Finish W&B run
     run.finish()
 
     # Save final model
-    model.save("ppo_ot2_model")
-    print("Model saved as ppo_ot2_model.zip")
+    model.save(f"models/{run.id}/final_model")
+    print(f"Final model saved as models/{run.id}/final_model.zip")
 
     # Close environment
     env.close()
 
 if __name__ == "__main__":
     main()
+
