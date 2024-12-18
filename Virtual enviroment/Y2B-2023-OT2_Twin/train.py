@@ -1,11 +1,11 @@
+import os
 import argparse
 from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
-from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
+from stable_baselines3.common.vec_env import DummyVecEnv
 from wandb.integration.sb3 import WandbCallback
 import wandb
-from ot2_env_wrapper import OT2Env  # Your custom environment wrapper
-from clearml import Task  # Import ClearML's Task
+from ot2_env_wrapper import OT2Env  # Custom environment wrapper
 
 # ClearML integration
 task = Task.init(
@@ -14,6 +14,10 @@ task = Task.init(
 )
 task.set_base_docker('deanis/2023y2b-rl:latest')  # Set the Docker image
 task.execute_remotely(queue_name="default")       # Execute remotely in the ClearML queue
+
+
+# Set W&B API key
+os.environ['WANDB_API_KEY'] = '4068421fea4a91b66b033f55a01001d7badb12a6'  # Replace with your W&B API key
 
 def main():
     # Argument parser for hyperparameters
@@ -24,7 +28,6 @@ def main():
     parser.add_argument('--gamma', type=float, default=0.99, help="Discount factor")
     parser.add_argument('--total_timesteps', type=int, default=1e6, help="Total timesteps for training")
     parser.add_argument('--max_steps', type=int, default=1000, help="Maximum steps per episode")
-    parser.add_argument('--render', action='store_true', help="Render the environment during training")
     parser.add_argument('--wandb_project', type=str, default="OT2_RL_Project", help="W&B project name")
     args = parser.parse_args()
 
@@ -47,20 +50,12 @@ def main():
 
     # Custom environment setup
     def make_env():
-        env = OT2Env(render=args.render, max_steps=args.max_steps)
+        env = OT2Env(max_steps=args.max_steps)
         env = Monitor(env)  # Record stats like rewards
         return env
 
     # Create vectorized environment for SB3
     env = DummyVecEnv([make_env])
-
-    # Optional: Record training videos
-    env = VecVideoRecorder(
-        env,
-        f"videos/{run.id}",
-        record_video_trigger=lambda x: x % 2000 == 0,
-        video_length=200,
-    )
 
     # Initialize PPO model
     model = PPO(
@@ -74,39 +69,49 @@ def main():
         tensorboard_log=f"runs/{run.id}",  # Log TensorBoard metrics
     )
 
-    # Train the model in chunks with periodic saving
-    total_training_steps = args.total_timesteps
-    save_frequency = 100000  # Define the frequency to save the model in timesteps
+    # Create W&B callback
+    wandb_callback = WandbCallback(
+        model_save_freq=1000,
+        model_save_path=f"models/{run.id}",
+        verbose=2,
+    )
 
-    for i in range(total_training_steps // save_frequency):
-        print(f"Training chunk {i+1}, timesteps: {save_frequency}")
+    # Train and save models periodically
+    timesteps = 100000  # Number of timesteps per chunk
+    total_training_steps = int(args.total_timesteps)
+
+    for i in range(total_training_steps // timesteps):
+        print(f"Training chunk {i+1}, timesteps: {timesteps}")
         model.learn(
-            total_timesteps=save_frequency,
-            callback=WandbCallback(
-                gradient_save_freq=100,               # Log gradients every 100 steps
-                model_save_path=f"models/{run.id}",  # Save models periodically
-                verbose=2,                           # Verbosity level for W&B
-            ),
+            total_timesteps=timesteps,
+            callback=wandb_callback,
             progress_bar=True,
-            reset_num_timesteps=False,  # Continue counting timesteps
+            reset_num_timesteps=False,
             tb_log_name=f"runs/{run.id}",
         )
         # Save the model after each chunk
-        model.save(f"models/{run.id}/{save_frequency * (i + 1)}")
-        print(f"Model saved at timesteps: {save_frequency * (i + 1)}")
+        model.save(f"models/{run.id}/{timesteps * (i + 1)}")
+        print(f"Model saved at timestep {timesteps * (i + 1)}")
 
     print("Training complete!")
 
+    # Save final model
+    final_model_path = f"models/{run.id}/final_model.zip"
+    model.save(final_model_path)
+    artifact = wandb.Artifact(
+        f"ppo_final_model_{run.id}",
+        type="model",
+        description="Final trained model",
+    )
+    artifact.add_file(final_model_path)
+    wandb.log_artifact(artifact)
+    print("Final model saved and logged to W&B.")
+
     # Finish W&B run
     run.finish()
-
-    # Save final model
-    model.save(f"models/{run.id}/final_model")
-    print(f"Final model saved as models/{run.id}/final_model.zip")
 
     # Close environment
     env.close()
 
 if __name__ == "__main__":
     main()
-
