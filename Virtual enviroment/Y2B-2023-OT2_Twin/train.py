@@ -6,6 +6,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from wandb.integration.sb3 import WandbCallback
 import wandb
 from ot2_env_wrapper import OT2Env  # Custom environment wrapper
+from clearml import Task  # Import ClearML's Task
 
 # ClearML integration
 task = Task.init(
@@ -15,9 +16,8 @@ task = Task.init(
 task.set_base_docker('deanis/2023y2b-rl:latest')  # Set the Docker image
 task.execute_remotely(queue_name="default")       # Execute remotely in the ClearML queue
 
-
-# Set W&B API key
-os.environ['WANDB_API_KEY'] = '4068421fea4a91b66b033f55a01001d7badb12a6'  # Replace with your W&B API key
+# Set W&B API key dynamically
+os.environ['WANDB_API_KEY'] = os.getenv('WANDB_API_KEY')  # Replace with your W&B API key in the environment
 
 def main():
     # Argument parser for hyperparameters
@@ -68,6 +68,9 @@ def main():
         verbose=1,
         tensorboard_log=f"runs/{run.id}",  # Log TensorBoard metrics
     )
+
+    # Ensure the model save directory exists
+    os.makedirs(f"models/{run.id}", exist_ok=True)
 
     # Create W&B callback
     wandb_callback = WandbCallback(
