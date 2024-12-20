@@ -73,18 +73,31 @@ class OT2Env(gym.Env):
         # Combine pipette position with goal position
         full_observation = np.concatenate((pipette_position, self.goal_position), axis=0)
 
-        # Compute reward (negative distance to goal)
+        # Compute distance to goal
         distance_to_goal = np.linalg.norm(pipette_position - self.goal_position)
-        reward = -float(distance_to_goal)  # Ensure reward is returned as a native Python float
+
+        # Reward function
+        max_distance = np.linalg.norm(self.goal_position - np.array([0.0, 0.0, 0.0]))
+        reward = -(distance_to_goal / max_distance)  # Normalize distance-based reward
+
+        # Add a success bonus
+        if distance_to_goal < 0.01:
+            reward += 10.0  # Bonus for reaching the goal
+
+        # Penalize each step
+        reward -= 0.01
 
         # Check if the task is complete
-        terminated = bool(distance_to_goal < 0.01)  # Ensure terminated is a boolean
+        terminated = bool(distance_to_goal < 0.01)
 
         # Check if the episode is truncated
-        truncated = bool(self.steps >= self.max_steps)  # Ensure truncated is a boolean
+        truncated = bool(self.steps >= self.max_steps)
 
+        # Increment step count
         self.steps += 1
+
         return full_observation, reward, terminated, truncated, {}
+
 
 
     def render(self, mode="human"):
