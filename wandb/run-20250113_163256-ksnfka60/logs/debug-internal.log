@@ -1,0 +1,17 @@
+{"time":"2025-01-13T16:32:56.9951869+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.2","symlink path":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163256-ksnfka60\\logs\\debug-core.log"}
+{"time":"2025-01-13T16:32:57.1164521+01:00","level":"INFO","msg":"created new stream","id":"ksnfka60"}
+{"time":"2025-01-13T16:32:57.116965+01:00","level":"INFO","msg":"stream: started","id":"ksnfka60"}
+{"time":"2025-01-13T16:32:57.116965+01:00","level":"INFO","msg":"handler: started","stream_id":"ksnfka60"}
+{"time":"2025-01-13T16:32:57.116965+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ksnfka60"}
+{"time":"2025-01-13T16:32:57.116965+01:00","level":"INFO","msg":"sender: started","stream_id":"ksnfka60"}
+{"time":"2025-01-13T16:32:57.3406873+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-13T16:33:04.9465839+01:00","level":"INFO","msg":"stream: closing","id":"ksnfka60"}
+{"time":"2025-01-13T16:33:04.9465839+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-13T16:33:04.9470984+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-13T16:33:08.9389415+01:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-01-13T16:33:08.9422315+01:00","level":"ERROR","msg":"tensorboard: error creating symlink","target":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\ksnfka60\\runs\\ksnfka60_0\\events.out.tfevents.1736782378.Edo.5340.0","symlink":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163256-ksnfka60\\files\\runs\\ksnfka60\\runs\\ksnfka60_0\\events.out.tfevents.1736782378.Edo.5340.0","error":"symlink C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\ksnfka60\\runs\\ksnfka60_0\\events.out.tfevents.1736782378.Edo.5340.0 C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163256-ksnfka60\\files\\runs\\ksnfka60\\runs\\ksnfka60_0\\events.out.tfevents.1736782378.Edo.5340.0: A required privilege is not held by the client."}
+{"time":"2025-01-13T16:33:10.0773402+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-13T16:33:10.4717968+01:00","level":"INFO","msg":"handler: closed","stream_id":"ksnfka60"}
+{"time":"2025-01-13T16:33:10.4717968+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ksnfka60"}
+{"time":"2025-01-13T16:33:10.4717968+01:00","level":"INFO","msg":"sender: closed","stream_id":"ksnfka60"}
+{"time":"2025-01-13T16:33:10.4717968+01:00","level":"INFO","msg":"stream: closed","id":"ksnfka60"}

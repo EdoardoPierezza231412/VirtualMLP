@@ -1,0 +1,17 @@
+{"time":"2025-01-13T16:37:08.598971+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.2","symlink path":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163708-8102npc5\\logs\\debug-core.log"}
+{"time":"2025-01-13T16:37:08.7165022+01:00","level":"INFO","msg":"created new stream","id":"8102npc5"}
+{"time":"2025-01-13T16:37:08.7170174+01:00","level":"INFO","msg":"stream: started","id":"8102npc5"}
+{"time":"2025-01-13T16:37:08.7170174+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"8102npc5"}
+{"time":"2025-01-13T16:37:08.7170174+01:00","level":"INFO","msg":"handler: started","stream_id":"8102npc5"}
+{"time":"2025-01-13T16:37:08.7170174+01:00","level":"INFO","msg":"sender: started","stream_id":"8102npc5"}
+{"time":"2025-01-13T16:37:08.9448095+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-13T16:37:16.5741566+01:00","level":"INFO","msg":"stream: closing","id":"8102npc5"}
+{"time":"2025-01-13T16:37:16.5741566+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-13T16:37:16.5747367+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-13T16:37:20.780455+01:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-01-13T16:37:20.7831393+01:00","level":"ERROR","msg":"tensorboard: error creating symlink","target":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\8102npc5\\runs\\8102npc5_0\\events.out.tfevents.1736782630.Edo.13112.0","symlink":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163708-8102npc5\\files\\runs\\8102npc5\\runs\\8102npc5_0\\events.out.tfevents.1736782630.Edo.13112.0","error":"symlink C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\8102npc5\\runs\\8102npc5_0\\events.out.tfevents.1736782630.Edo.13112.0 C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163708-8102npc5\\files\\runs\\8102npc5\\runs\\8102npc5_0\\events.out.tfevents.1736782630.Edo.13112.0: A required privilege is not held by the client."}
+{"time":"2025-01-13T16:37:21.8095706+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-13T16:37:22.1357319+01:00","level":"INFO","msg":"handler: closed","stream_id":"8102npc5"}
+{"time":"2025-01-13T16:37:22.1357319+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"8102npc5"}
+{"time":"2025-01-13T16:37:22.1357319+01:00","level":"INFO","msg":"sender: closed","stream_id":"8102npc5"}
+{"time":"2025-01-13T16:37:22.1362345+01:00","level":"INFO","msg":"stream: closed","id":"8102npc5"}

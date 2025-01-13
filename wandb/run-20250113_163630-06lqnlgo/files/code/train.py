@@ -3,20 +3,24 @@ import argparse
 from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv
+from wandb.integration.sb3 import WandbCallback
 from ot2_env_wrapper import OT2Env  # Custom environment wrapper
 from clearml import Task  # Import ClearML's Task
 import typing_extensions
+import os
+os.environ["WANDB_FORCE_HARDLINKS"] = "1"
 import wandb
-from wandb.integration.sb3 import WandbCallback
+
 
 # ClearML integration
- 
-task = Task.init(
-    project_name='Mentor Group J/Group 0',  # Replace with your actual project name
-    task_name='RL Training Experiment1'    # Replace with a descriptive task name
-)
-task.set_base_docker('deanis/2023y2b-rl:latest')  # Set the Docker image
-task.execute_remotely(queue_name="default")       # Execute remotely in the ClearML queue
+# 
+# task = Task.init(
+#     project_name='Mentor Group J/Group 0',  # Replace with your actual project name
+#     task_name='RL Training Experiment1'    # Replace with a descriptive task name
+#     )
+# task.set_base_docker('deanis/2023y2b-rl:latest')  # Set the Docker image
+# task.execute_remotely(queue_name="default")       # Execute remotely in the ClearML queue
+
 
 os.environ['WANDB_API_KEY'] = '4068421fea4a91b66b033f55a01001d7badb12a6'
 

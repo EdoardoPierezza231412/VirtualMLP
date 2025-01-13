@@ -1,0 +1,17 @@
+{"time":"2025-01-13T16:34:13.2696469+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.2","symlink path":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163413-z4sevf4e\\logs\\debug-core.log"}
+{"time":"2025-01-13T16:34:13.3990812+01:00","level":"INFO","msg":"created new stream","id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:13.3990812+01:00","level":"INFO","msg":"stream: started","id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:13.3990812+01:00","level":"INFO","msg":"handler: started","stream_id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:13.3990812+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:13.3990812+01:00","level":"INFO","msg":"sender: started","stream_id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:13.7076563+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-13T16:34:21.1321298+01:00","level":"INFO","msg":"stream: closing","id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:21.1321298+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-13T16:34:21.1331553+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-13T16:34:25.3433741+01:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-01-13T16:34:25.3455982+01:00","level":"ERROR","msg":"tensorboard: error creating symlink","target":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\z4sevf4e\\runs\\z4sevf4e_0\\events.out.tfevents.1736782455.Edo.40348.0","symlink":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163413-z4sevf4e\\files\\runs\\z4sevf4e\\runs\\z4sevf4e_0\\events.out.tfevents.1736782455.Edo.40348.0","error":"symlink C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\z4sevf4e\\runs\\z4sevf4e_0\\events.out.tfevents.1736782455.Edo.40348.0 C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_163413-z4sevf4e\\files\\runs\\z4sevf4e\\runs\\z4sevf4e_0\\events.out.tfevents.1736782455.Edo.40348.0: A required privilege is not held by the client."}
+{"time":"2025-01-13T16:34:26.764639+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-13T16:34:27.2055824+01:00","level":"INFO","msg":"handler: closed","stream_id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:27.2055824+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:27.2055824+01:00","level":"INFO","msg":"sender: closed","stream_id":"z4sevf4e"}
+{"time":"2025-01-13T16:34:27.2060854+01:00","level":"INFO","msg":"stream: closed","id":"z4sevf4e"}

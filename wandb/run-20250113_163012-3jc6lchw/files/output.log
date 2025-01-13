@@ -1,0 +1,22 @@
+Observation space shape: (9,)
+Action space shape: (3,)
+Using cpu device
+Training chunk 1, timesteps: 100000
+Reset: Pipette Position [0.073  0.0895 0.1195], Goal Position [ 0.24060598 -0.00673213  0.19387236]
+Logging to runs/3jc6lchw\runs/3jc6lchw_0
+Traceback (most recent call last):
+  File "c:/Users/Edopi/Desktop/VirtualMLP/train.py", line 126, in <module>
+    main()
+  File "c:/Users/Edopi/Desktop/VirtualMLP/train.py", line 94, in main
+    model.learn(
+  File "C:\Users\Edopi\anaconda3\envs\task11\lib\site-packages\stable_baselines3\ppo\ppo.py", line 311, in learn
+    return super().learn(
+  File "C:\Users\Edopi\anaconda3\envs\task11\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 310, in learn
+    total_timesteps, callback = self._setup_learn(
+  File "C:\Users\Edopi\anaconda3\envs\task11\lib\site-packages\stable_baselines3\common\base_class.py", line 434, in _setup_learn
+    callback = self._init_callback(callback, progress_bar)
+  File "C:\Users\Edopi\anaconda3\envs\task11\lib\site-packages\stable_baselines3\common\base_class.py", line 378, in _init_callback
+    callback = CallbackList([callback, ProgressBarCallback()])
+  File "C:\Users\Edopi\anaconda3\envs\task11\lib\site-packages\stable_baselines3\common\callbacks.py", line 694, in __init__
+    raise ImportError(
+ImportError: You must install tqdm and rich in order to use the progress bar callback. It is included if you install stable-baselines with the extra packages: `pip install stable-baselines3[extra]`

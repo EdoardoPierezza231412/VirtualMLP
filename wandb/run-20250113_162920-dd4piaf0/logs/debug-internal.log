@@ -1,0 +1,17 @@
+{"time":"2025-01-13T16:29:21.1380534+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.2","symlink path":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_162920-dd4piaf0\\logs\\debug-core.log"}
+{"time":"2025-01-13T16:29:21.9730461+01:00","level":"INFO","msg":"created new stream","id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:21.9735601+01:00","level":"INFO","msg":"stream: started","id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:21.9735601+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:21.9735601+01:00","level":"INFO","msg":"handler: started","stream_id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:21.9735601+01:00","level":"INFO","msg":"sender: started","stream_id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:22.2276063+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-13T16:29:24.4880491+01:00","level":"INFO","msg":"stream: closing","id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:24.4880491+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-13T16:29:24.4890788+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-13T16:29:34.4690745+01:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-01-13T16:29:34.4747344+01:00","level":"ERROR","msg":"tensorboard: error creating symlink","target":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\dd4piaf0\\runs\\dd4piaf0_0\\events.out.tfevents.1736782164.Edo.27112.0","symlink":"C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_162920-dd4piaf0\\files\\runs\\dd4piaf0\\runs\\dd4piaf0_0\\events.out.tfevents.1736782164.Edo.27112.0","error":"symlink C:\\Users\\Edopi\\Desktop\\VirtualMLP\\runs\\dd4piaf0\\runs\\dd4piaf0_0\\events.out.tfevents.1736782164.Edo.27112.0 C:\\Users\\Edopi\\Desktop\\VirtualMLP\\wandb\\run-20250113_162920-dd4piaf0\\files\\runs\\dd4piaf0\\runs\\dd4piaf0_0\\events.out.tfevents.1736782164.Edo.27112.0: A required privilege is not held by the client."}
+{"time":"2025-01-13T16:29:35.0156197+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-13T16:29:35.2259694+01:00","level":"INFO","msg":"handler: closed","stream_id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:35.2259694+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:35.2259694+01:00","level":"INFO","msg":"sender: closed","stream_id":"dd4piaf0"}
+{"time":"2025-01-13T16:29:35.226473+01:00","level":"INFO","msg":"stream: closed","id":"dd4piaf0"}
