@@ -10,12 +10,12 @@ from clearml import Task  # Import ClearML's Task
 import typing_extensions
 
 # ClearML integration
-task = Task.init(
-    project_name='Mentor Group J/Group 0',  # Replace with your actual project name
-    task_name='RL Training Experiment1'    # Replace with a descriptive task name
-)
-task.set_base_docker('deanis/2023y2b-rl:latest')  # Set the Docker image
-task.execute_remotely(queue_name="default")       # Execute remotely in the ClearML queue
+# task = Task.init(
+#     project_name='Mentor Group J/Group 0',  # Replace with your actual project name
+#     task_name='RL Training Experiment1'    # Replace with a descriptive task name
+# )
+# task.set_base_docker('deanis/2023y2b-rl:latest')  # Set the Docker image
+# task.execute_remotely(queue_name="default")       # Execute remotely in the ClearML queue
 
 
 os.environ['WANDB_API_KEY'] = '4068421fea4a91b66b033f55a01001d7badb12a6'
@@ -57,6 +57,8 @@ def main():
 
     # Create vectorized environment for SB3
     env = DummyVecEnv([make_env])
+     
+    
 
     # Initialize PPO model
     model = PPO(
@@ -119,3 +121,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
