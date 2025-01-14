@@ -90,7 +90,9 @@ class OT2Env(gym.Env):
 
         # Add a success bonus
         if distance_to_goal < 0.001:
-            reward += 20.0  # Increased bonus for reaching the goal
+            print(f"Goal reached at step {self.steps} with distance: {distance_to_goal:.6f}")
+            reward += 20.0
+            terminated = True
 
         # Penalize each step
         reward -= 0.005
