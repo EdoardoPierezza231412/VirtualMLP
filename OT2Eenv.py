@@ -6,13 +6,14 @@ from PIDController import PIDController
 
 
 class OT2Env(gym.Env):
-    def __init__(self, render=False, max_steps=10000):
+    def __init__(self, render=False, max_steps=5000):
         super(OT2Env, self).__init__()
-        self.render = render
+        self.enable_render = render  # Rename attribute to avoid conflict
+
         self.max_steps = max_steps
 
         # Create the simulation environment
-        self.sim = Simulation(num_agents=1)
+        self.sim = Simulation(num_agents=1, render=self.render)
 
         # Define action space: motor velocities for x, y, and z
         self.action_space = spaces.Box(
@@ -35,8 +36,11 @@ class OT2Env(gym.Env):
         self.pid_y = PIDController(kp=1.0, ki=0.0, kd=0.1)
         self.pid_z = PIDController(kp=1.0, ki=0.0, kd=0.1)
 
-        # Keep track of steps
+        # Initialize attributes
         self.steps = 0
+        self.velocity = np.zeros(3, dtype=np.float32)  # Initialize velocity here
+        self.goal_position = None  # Initialize goal_position to avoid accessing it prematurely
+
 
     def get_current_position(self):
         """
@@ -49,16 +53,6 @@ class OT2Env(gym.Env):
         robot_id_key = next(iter(observation.keys()))
         current_position = observation[robot_id_key]["pipette_position"]
         return np.array(current_position, dtype=np.float32)
-
-    def set_goal(self, goal_position):
-        """
-        Set a custom goal position for the robot.
-
-        Parameters:
-        - goal_position: A numpy array [x, y, z].
-        """
-        self.goal_position = np.array(goal_position, dtype=np.float32)
-        print(f"Goal position set to: {self.goal_position}")
 
     def image(self):
         """
@@ -169,7 +163,7 @@ class OT2Env(gym.Env):
         return full_observation, reward, terminated, truncated, {}
 
     def render(self, mode="human"):
-        if self.render:
+        if self.enable_render:  # Use the renamed attribute
             print(f"Rendering: Goal Position {self.goal_position}")
 
     def close(self):
