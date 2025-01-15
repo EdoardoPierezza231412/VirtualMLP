@@ -78,36 +78,26 @@ class OT2Env(gym.Env):
 
         return full_observation, {}
 
+    def step(self, action):
+        print(f"Step {self.steps + 1} called with action: {action}")
 
-    def step(self, _):
-        print(f"Step {self.steps + 1} called.")
+        # Initialize status variables
+        terminated = False
+        truncated = False
 
-        # Get the current pipette position
-        observation = self.sim.run([[0.0, 0.0, 0.0, 0.0]])
-        robot_id_key = next(iter(observation.keys()))
-        pipette_position = np.array(observation[robot_id_key]["pipette_position"], dtype=np.float32)
-
-        # Compute errors for each axis
-        error_x = self.goal_position[0] - pipette_position[0]
-        error_y = self.goal_position[1] - pipette_position[1]
-        error_z = self.goal_position[2] - pipette_position[2]
-
-        # Compute velocities using PID controllers
-        velocity_x = self.pid_x.compute(error_x)
-        velocity_y = self.pid_y.compute(error_y)
-        velocity_z = self.pid_z.compute(error_z)
-
-        # Create an action array from PID outputs
-        action = np.clip([velocity_x, velocity_y, velocity_z], -1.0, 1.0).astype(np.float32)
+        # Append a drop command (0) to the action
+        action_with_drop = list(action) + [0.0]
 
         # Execute action in the simulation
-        action_with_drop = list(action) + [0.0]
         observation = self.sim.run([action_with_drop])
 
-        # Extract pipette position again after taking the action
-        pipette_position = np.array(observation[robot_id_key]["pipette_position"], dtype=np.float32)
+        # Dynamically find the robot ID key
+        robot_id_key = next(iter(observation.keys()))
 
-        # Compute velocity for the observation
+        # Extract pipette position
+        pipette_position = np.array(observation[robot_id_key]['pipette_position'], dtype=np.float32)
+
+        # Compute velocity as the difference between steps
         self.velocity = pipette_position - self.velocity
 
         # Combine pipette position, velocity, and goal position
@@ -120,22 +110,19 @@ class OT2Env(gym.Env):
         max_distance = np.linalg.norm(np.array([0.253, 0.22, 0.29]) - np.array([-0.164, -0.171, 0.169]))
         reward = -(distance_to_goal / max_distance)  # Normalize distance-based reward
 
-        # Add a success bonus
+        # Success condition
         if distance_to_goal < 0.001:
-            reward += 20.0  # Increased bonus for reaching the goal
+            print(f"Goal reached at step {self.steps + 1} with distance: {distance_to_goal:.6f}")
+            reward += 50.0
+            terminated = True
 
         # Penalize each step
-        reward -= 0.005
-
-        # Check if the task is complete
-        terminated = bool(distance_to_goal < 0.001)
-        if terminated:
-            print(f"Terminated: Reached goal at step {self.steps + 1}")
+        reward -= 0.01
 
         # Check if the episode is truncated
-        truncated = bool(self.steps >= self.max_steps)
-        if truncated:
-            print(f"Truncated: Exceeded max steps at step {self.steps}")
+        if self.steps >= self.max_steps:
+            print(f"Truncated: Exceeded max steps at step {self.steps + 1}")
+            truncated = True
 
         # Increment step count
         self.steps += 1
