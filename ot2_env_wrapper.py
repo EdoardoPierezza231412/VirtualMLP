@@ -31,6 +31,24 @@ class OT2Env(gym.Env):
 
         # Keep track of steps
         self.steps = 0
+    
+
+    def image(self):
+        """
+        Capture the current plate image from the simulation.
+
+        Returns:
+        - image_path: The path to the saved image of the current plate.
+        """
+        try:
+            image_path = self.sim.get_plate_image()
+            if image_path:
+                print(f"Image captured and saved at: {image_path}")
+                return image_path
+            else:
+                raise ValueError("Failed to capture the plate image from the simulation.")
+        except Exception as e:
+            raise RuntimeError(f"Error while capturing image: {e}")
 
     def reset(self, seed=None, options=None):
         if seed is not None:

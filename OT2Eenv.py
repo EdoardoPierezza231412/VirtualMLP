@@ -38,6 +38,45 @@ class OT2Env(gym.Env):
         # Keep track of steps
         self.steps = 0
 
+    def get_current_position(self):
+        """
+        Retrieve the current position of the robot's pipette.
+
+        Returns:
+        - current_position: A numpy array [x, y, z] representing the current pipette position.
+        """
+        observation = self.sim.run([[0.0, 0.0, 0.0, 0.0]])
+        robot_id_key = next(iter(observation.keys()))
+        current_position = observation[robot_id_key]["pipette_position"]
+        return np.array(current_position, dtype=np.float32)
+
+    def set_goal(self, goal_position):
+        """
+        Set a custom goal position for the robot.
+
+        Parameters:
+        - goal_position: A numpy array [x, y, z].
+        """
+        self.goal_position = np.array(goal_position, dtype=np.float32)
+        print(f"Goal position set to: {self.goal_position}")
+
+    def image(self):
+        """
+        Capture the current plate image from the simulation.
+
+        Returns:
+        - image_path: The path to the saved image of the current plate.
+        """
+        try:
+            image_path = self.sim.get_plate_image()
+            if image_path:
+                print(f"Image captured and saved at: {image_path}")
+                return image_path
+            else:
+                raise ValueError("Failed to capture the plate image from the simulation.")
+        except Exception as e:
+            raise RuntimeError(f"Error while capturing image: {e}")
+
     def reset(self, seed=None, options=None):
         if seed is not None:
             np.random.seed(seed)
