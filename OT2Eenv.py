@@ -141,14 +141,14 @@ class OT2Env(gym.Env):
         reward = -(distance_to_goal / max_distance)  # Normalize distance-based reward
 
         # Add a success bonus
-        if distance_to_goal < 0.001:
+        if distance_to_goal < 0.0005:
             reward += 20.0  # Increased bonus for reaching the goal
 
         # Penalize each step
         reward -= 0.005
 
         # Check if the task is complete
-        terminated = bool(distance_to_goal < 0.001)
+        terminated = bool(distance_to_goal < 0.0005)
         if terminated:
             print(f"Terminated: Reached goal at step {self.steps + 1}")
 
