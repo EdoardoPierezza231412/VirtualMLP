@@ -31,7 +31,6 @@ class OT2Env(gym.Env):
 
         # Keep track of steps
         self.steps = 0
-    
 
     def image(self):
         """
@@ -137,7 +136,17 @@ class OT2Env(gym.Env):
 
         return full_observation, reward, terminated, truncated, {}
 
+    def get_current_position(self):
+        """
+        Retrieve the current position of the pipette.
 
+        Returns:
+        - pipette_position: A numpy array [x, y, z].
+        """
+        observation = self.sim.run([[0.0, 0.0, 0.0, 0.0]])
+        robot_id_key = next(iter(observation.keys()))
+        pipette_position = observation[robot_id_key]["pipette_position"]
+        return np.array(pipette_position, dtype=np.float32)
 
     def render(self, mode="human"):
         if self.render:
@@ -146,4 +155,3 @@ class OT2Env(gym.Env):
     def close(self):
         print("Closing environment.")
         self.sim.close()
-
