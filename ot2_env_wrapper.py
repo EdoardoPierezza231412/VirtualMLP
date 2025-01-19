@@ -85,49 +85,58 @@ class OT2Env(gym.Env):
         terminated = False
         truncated = False
 
-        # Append a drop command (0) to the action
-        action_with_drop = list(action) + [0.0]
+        try:
+            # Append a drop command (0) to the action
+            action_with_drop = list(action) + [0.0]
 
-        # Execute action in the simulation
-        observation = self.sim.run([action_with_drop])
+            # Execute action in the simulation
+            observation = self.sim.run([action_with_drop])
 
-        # Dynamically find the robot ID key
-        robot_id_key = next(iter(observation.keys()))
+            # Dynamically find the robot ID key
+            robot_id_key = next(iter(observation.keys()))
 
-        # Extract pipette position
-        pipette_position = np.array(observation[robot_id_key]['pipette_position'], dtype=np.float32)
+            # Extract pipette position
+            pipette_position = np.array(observation[robot_id_key]['pipette_position'], dtype=np.float32)
 
-        # Compute velocity as the difference between steps
-        self.velocity = pipette_position - self.velocity
+            # Compute velocity as the difference between steps
+            self.velocity = pipette_position - self.velocity
 
-        # Combine pipette position, velocity, and goal position
-        full_observation = np.concatenate((pipette_position, self.velocity, self.goal_position), axis=0)
+            # Combine pipette position, velocity, and goal position
+            full_observation = np.concatenate((pipette_position, self.velocity, self.goal_position), axis=0)
 
-        # Compute distance to goal
-        distance_to_goal = np.linalg.norm(pipette_position - self.goal_position)
+            # Compute distance to goal
+            distance_to_goal = np.linalg.norm(pipette_position - self.goal_position)
 
-        # Reward function
-        max_distance = np.linalg.norm(np.array([0.253, 0.22, 0.29]) - np.array([-0.164, -0.171, 0.169]))
-        reward = -(distance_to_goal / max_distance)  # Normalize distance-based reward
+            # Reward function
+            max_distance = np.linalg.norm(np.array([0.253, 0.22, 0.29]) - np.array([-0.164, -0.171, 0.169]))
+            reward = -(distance_to_goal / max_distance)  # Normalize distance-based reward
 
-        # Success condition
-        if distance_to_goal < 0.001:
-            print(f"Goal reached at step {self.steps + 1} with distance: {distance_to_goal:.6f}")
-            reward += 50.0
+            # Success condition
+            if distance_to_goal < 0.001:
+                print(f"Goal reached at step {self.steps + 1} with distance: {distance_to_goal:.6f}")
+                reward += 50.0
+                terminated = True
+
+            # Penalize each step
+            reward -= 0.01
+
+            # Check if the episode is truncated
+            if self.steps >= self.max_steps:
+                print(f"Truncated: Exceeded max steps at step {self.steps + 1}")
+                truncated = True
+
+        except Exception as e:
+            print(f"Error during simulation step: {e}")
+            # Safely terminate the episode on error
             terminated = True
-
-        # Penalize each step
-        reward -= 0.01
-
-        # Check if the episode is truncated
-        if self.steps >= self.max_steps:
-            print(f"Truncated: Exceeded max steps at step {self.steps + 1}")
-            truncated = True
+            reward = -1.0  # Penalize heavily for errors
+            full_observation = np.zeros_like(self.observation_space.sample(), dtype=np.float32)
 
         # Increment step count
         self.steps += 1
 
         return full_observation, reward, terminated, truncated, {}
+
 
 
     def render(self, mode="human"):
