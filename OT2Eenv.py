@@ -32,9 +32,9 @@ class OT2Env(gym.Env):
         )
 
         # Initialize PID controllers for x, y, and z axes
-        self.pid_x = PIDController(kp=1.0, ki=0.0, kd=0.1)
-        self.pid_y = PIDController(kp=1.0, ki=0.0, kd=0.1)
-        self.pid_z = PIDController(kp=1.0, ki=0.0, kd=0.1)
+        self.pid_x = PIDController(kp=100.0, ki=0.0, kd=0.1)
+        self.pid_y = PIDController(kp=100.0, ki=0.0, kd=0.1)
+        self.pid_z = PIDController(kp=100.0, ki=0.0, kd=0.1)
 
         # Initialize attributes
         self.steps = 0
